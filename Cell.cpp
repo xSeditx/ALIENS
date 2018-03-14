@@ -293,6 +293,8 @@ void Organism::Draw()
 
 int Collision(Organism *parent, Organism *List [])
 {
+    return 1;
+
     FOR_LOOP(OrganismCount, 10)
     {
         if (List[OrganismCount] != parent)
@@ -301,12 +303,11 @@ int Collision(Organism *parent, Organism *List [])
             {
                 //  Print("Collision"); 
                 //  Print (OrganismCount);
-                return 1;
             }
         }
     }
 
-    return 0;
+    return 1;
 }
 
 
