@@ -7,11 +7,6 @@
 #define RANDOM(x)                 ((rand() * (1.0 / (1.0 + RAND_MAX))) * (x))
 #define RANDOM_RANGE(x)           (RANDOM(x * 2) - (x))
 
-#ifdef RGB
-#undef RGB
-#endif
-
-#define RGB(r,g,b)                ((int)b + ((int)g<< 8) + ((int)r << 16))
 #define RADIANS(angle)            ((angle) * .0174532925199444)
 
 #define LOOP(x)                   for(int count = 0; count < (x); count++)
@@ -24,16 +19,17 @@
 #define _CLS        clear_screen()     //
 #define _SYNC       SYNC()        //
 
-#define _COS(a)       cos(RADIANS(a))  //Cos[(int)a]
-#define _SIN(a)       sin(RADIANS(a))  //Sin[(int)a]
+
+extern double COS[360], SIN[360];
+#define _COS(a) COS[(int)a]
+#define _SIN(a) SIN[(int)a]
 
 
-extern float Cos[360],
-Sin[360];
-
-
-// cos(RADIANS(a))
-//sin(RADIANS(a))
+template <typename T>
+static constexpr int color_from_rgb(T r, T g, T b)
+{
+	return static_cast<int>(b) + (static_cast<int>(g) << 8) + (static_cast<int>(r) << 16);
+}
 
 
 class WINDOW

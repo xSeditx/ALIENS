@@ -104,6 +104,7 @@ bool LOOP_GAME()
 		if (SCREEN->EVENT.button.button == SDL_BUTTON_LEFT)
 			leftMouseButtonDown = true;
 		SCREEN->MOUSE_BUTTON.LEFT = true;
+		break;
 	case SDL_MOUSEMOTION:
 		//int mouseX = SCREEN->EVENT.motion.x;
 		//int mouseY = SCREEN->EVENT.motion.y;

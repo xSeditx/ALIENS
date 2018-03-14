@@ -47,7 +47,7 @@ Cell::Cell(Organism *parent)
 	Angle = RANDOM(0);
 	Friction = RANDOM(1);
 
-	Color = RGB((55 + RANDOM(200)),
+	Color = color_from_rgb((55 + RANDOM(200)),
 		(55 + RANDOM(200)),
 		(55 + RANDOM(200)));
 
@@ -70,7 +70,7 @@ void Cell::See()
 	{
 		Xx = X + dist * _COS(Angle);
 		Yy = Y + dist * _SIN(Angle);
-		SET_PIXELII(Xx, Yy, RGB(255, 255, 255));
+		SET_PIXELII(Xx, Yy, color_from_rgb(255, 255, 255));
 	}
 }
 

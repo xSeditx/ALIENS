@@ -177,7 +177,7 @@ void main()
 				Selected->Force.X = (MASS * SCREEN->MOUSE_VELOCITY.x); // .03, TIME STEP? 
 				Selected->Force.Y = (MASS * SCREEN->MOUSE_VELOCITY.y); //(rand()%3-1) * 1;
 
-				SET_DRAW_COLOR(RGB(255, 255, 255));
+				SET_DRAW_COLOR(color_from_rgb(255, 255, 255));
 				FILLED_CIRCLE(Selected->Offset.X + Selected->Parent->Potential.X,
 					Selected->Offset.Y + Selected->Parent->Potential.Y, 7);
 			}
