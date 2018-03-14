@@ -1,19 +1,18 @@
-﻿//                                                                                                                                                                                                                                                                                                                                       
-//                                                                                                                                                                                                                                                                                   
-//   Cell class for building and manipulating organisms                                                                                                                                                                                                                                                                    
-//                                                                                                                                                                                                                                                                                   
-//     _____      ______       __           __                                                                                                                                                                                                                                                
-//    /  _  \    |  ____}     |  |         |  |                                                                                                                                                                                                                                              
-//   | |  \ _|   | |___       |  |         |  |                                                                                                                                                                                                                                         
-//   | |         |  ___}      |  |         |  |                                                                                                                                                                                                                                            
+﻿//
+//
+//   Cell class for building and manipulating organisms
+//
+//     _____      ______       __           __
+//    /  _  \    |  ____}     |  |         |  |
+//   | |  \ _|   | |___       |  |         |  |
+//   | |         |  ___}      |  |         |  |
 //   | |    _    | |          |  |         |  |
-//   | | _/  |   | |____      |  |______   |  |______                                                                                                                                                                                                                                            
-//    \_____/    |______}     |_________|  |_________|                                                                                                                                                                                                                                                    
-//                                                                                                                                                                                                                                                                                   
-//                                                                                                                                                                                                                                                                                   
-// TODO: Impliment better friction so that cells lose Velocity proportional to their mass and friction Coefficient                                                                                                                                                                                                                                                                             
-//=============================================================================================================================================================                                                                                                                                                                                                                                                                                  
-
+//   | | _/  |   | |____      |  |______   |  |______
+//    \_____/    |______}     |_________|  |_________|
+//
+//
+// TODO: Impliment better friction so that cells lose Velocity proportional to their mass and friction Coefficient
+//==================================================================================================================
 #include"cell.h"
 #include"window.h"
 #include"Vertex2D.h"
@@ -21,35 +20,32 @@
 
 #include <cstddef>
 
-//=============================================================================================================================================================
-//                                                         CELL CLASS                                                                                
-//=============================================================================================================================================================
+
+//==================================================================================================================
+//                                                         CELL CLASS                                               
+//==================================================================================================================
 
 Cell::Cell(Organism *parent)
-{
-    ID = parent->Number_of_Cells++;
+    : Offset(RANDOM(300), RANDOM(300))
+    , Starting(Offset)
+    , Velocity()
+    , Force()
 
-    Offset.X = RANDOM(300);
-    Offset.Y = RANDOM(300);
-    Starting.X = Offset.X;
-    Starting.Y = Offset.Y;
+    , ID(parent->Number_of_Cells++)
+    , Friction(RANDOM(1))
 
-    Velocity = 0;
-    Force = 0;
+    , Angle()
+    , Speed()
+    , Mass(10)
 
-    Speed = 0;
-    Angle = RANDOM(0);
-    Friction = RANDOM(1);
-
-    Color = color_from_rgb(
+    , Color(color_from_rgb(
         55 + RANDOM(200),
         55 + RANDOM(200),
         55 + RANDOM(200)
-    );
+    ))
 
-    Mass = 10 + (rand() % 16);
-    Parent = parent;
-}
+    , Parent(parent)
+{ }
 
 void Cell::See()
 {
@@ -68,9 +64,9 @@ void Cell::See()
 }
 
 
-//=============================================================================================================================================================
-//                                                         ORGANISM CLASS                                                                              
-//=============================================================================================================================================================
+//==================================================================================================================
+//                                                 ORGANISM CLASS                                                   
+//==================================================================================================================
 
 
 Organism::Organism(std::size_t id, unsigned char numcells, int x, int y)
@@ -139,29 +135,22 @@ Organism* Organism::Mutate(Organism Parent)
     this->Number_of_Cells = Parent.Number_of_Cells;
     this->cells = Parent.cells;
 
-    this->Velocity.X = 0;
-    this->Velocity.Y = 0;
+    this->Velocity = 0;
     this->Distance_moved = 0;
 
-    FOR_LOOP(cellcount, Parent.Number_of_Cells)
+    FOR_LOOP(cellcount, this->Number_of_Cells)
     {
         this->cells[cellcount].Offset = this->cells[cellcount].Starting;
-        this->cells[cellcount].Velocity.X = 0;
-        this->cells[cellcount].Velocity.Y = 0;
+        this->cells[cellcount].Velocity = 0;
         this->cells[cellcount].Speed = 0;
-        this->cells[cellcount].Force.X = 0;
-        this->cells[cellcount].Force.Y = 0;
+        this->cells[cellcount].Force = 0;
         this->cells[cellcount].Angle = 0;
-        this->cells[cellcount].Mass = this->cells[cellcount].Mass;
         this->cells[cellcount].Parent = this;
-
-        this->cells[cellcount].Brain.Layers[0] = this->cells[cellcount].Brain.Layers[0];
 
         this->cells[cellcount].Brain.Layers[0].Neurons[0].Value = 0;
         this->cells[cellcount].Brain.Layers[0].Neurons[1].Value = 0;
         this->cells[cellcount].Brain.Layers[0].Neurons[2].Value = 0;
 
-        this->cells[cellcount].Brain.Layers[1] = this->cells[cellcount].Brain.Layers[1];
         this->cells[cellcount].Brain.Layers[1].Neurons[0].Value = 0;
         this->cells[cellcount].Brain.Layers[1].Neurons[1].Value = 0;
         this->cells[cellcount].Brain.Layers[1].Neurons[2].Value = 0;
@@ -176,7 +165,6 @@ Organism* Organism::Mutate(Organism Parent)
             }
         }
 
-        this->cells[cellcount].Brain.Layers[2] = this->cells[cellcount].Brain.Layers[2];
         this->cells[cellcount].Brain.Layers[2].Neurons[0].Value = 0;
         this->cells[cellcount].Brain.Layers[2].Neurons[1].Value = 0;
 
@@ -188,16 +176,13 @@ Organism* Organism::Mutate(Organism Parent)
             }
         }
     }
+
     return this;
 }
 
 void Organism::Update(float Time_Step)
 {
-    float
-        DELTA_TIME = 0,
-        DELTA_VELOCITY = 0;
-
-    DELTA_TIME = (SDL_GetTicks() - SCREEN->TIME) / 10;
+    const float DELTA_TIME = (SDL_GetTicks() - SCREEN->TIME) / 10.;
     SCREEN->TIME = SDL_GetTicks();
 
     float Xmove = 0, Ymove = 0;
@@ -215,26 +200,24 @@ void Organism::Update(float Time_Step)
 
     Xmove /= this->Number_of_Cells;
     Ymove /= this->Number_of_Cells;
-    X = Xmove + Potential.X;
-    Y = Ymove + Potential.Y;
-    // FILLED_CIRCLE( X,Y, 14);
+    Position.X = Xmove + Potential.X;
+    Position.Y = Ymove + Potential.Y;
 
     Potential.X = Xmove + Starting.X;
     Potential.Y = Ymove + Starting.Y;
-    Distance_moved = sqrt(Squared(X - Starting.X) + Squared(Y - Starting.Y));
+    Distance_moved = sqrt(Squared(Position.X - Starting.X) + Squared(Position.Y - Starting.Y));
 
-    //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 
     for (Cell &Parent : cells)
-    { // Cycle Every Cell
+    {
         Parent.Velocity *= .5f; // APPLY A CRUDE "FRICTION" SO THAT VELOCITY IS LOST OVER TIME
 
         Parent.See();
         Parent.Brain.Think();
 
         for (Edge &Child : Parent.edges)
-        { // For Every Cell Get and Set Information about all Connecting Cells.
-
+        {
+            // For Every Cell Get and Set Information about all Connecting Cells.
             int off = Child.Child_ID;
 
             Child.Angle = GetAngle(Parent.Offset, cells[off].Offset);
@@ -242,13 +225,11 @@ void Organism::Update(float Time_Step)
             Child.Displacement = Get_Displacement(cells[off].Offset, Parent.Offset) - Child.RestDistance;
             Child.Distance = Child.Get_Distance(cells[off]);
 
-            float K = .1;
+            constexpr float K = .1f;
             cells[off].Force.X += -K * (Child.Displacement.X);
             cells[off].Force.Y += -K * (Child.Displacement.Y);
 
-
             // acceleration = (−SpringStiffness ⁄ mass) * Position 
-
 
             cells[off].Brain.Layers[0].Neurons[1].Value = cells[off].Force.X; //Parent.Brain.Layers[2].Neurons[1].Value;
             cells[off].Brain.Layers[0].Neurons[0].Value = cells[off].Force.Y; //.Brain.Layers[2].Neurons[0].Value;
@@ -270,24 +251,19 @@ void Organism::Update(float Time_Step)
     }
 }
 
-void Organism::Draw()
-{             /// WAIT WHY IS THIS NOT BEING CALLED AT ALL... DID I SHUT IT OFF????
-
-    FOR_LOOP(cellcount, cells.size())
+void Organism::Draw() const
+{
+    for(auto & cell : cells)
     {
-        FOR_LOOP(edgecount, cells[cellcount].edges.size())
+        for(auto & edge : cell.edges)
         {
-            auto & Child = *cells[cellcount].edges[edgecount].Child_ptr;
-
-            float x1 = cells[cellcount].Offset.X + Potential.X,
-                y1 = cells[cellcount].Offset.Y + Potential.Y,
-
-                x2 = (x1 + Child.Offset.X + Potential.X) / 2,
-                y2 = (y1 + Child.Offset.Y + Potential.Y) / 2;
-
-
-            SET_DRAW_COLOR(cells[cellcount].Color);
-            LINE(x1, y1, x2, y2);
+            SET_DRAW_COLOR(cell.Color);
+            LINE(
+                cell.Offset.X + Potential.X,
+                cell.Offset.Y + Potential.Y,
+                (cell.Offset.X + edge.Child_ptr->Offset.X) / 2 + Potential.X,
+                (cell.Offset.Y + edge.Child_ptr->Offset.Y) / 2 + Potential.Y
+            );
         }
     }
 }
@@ -296,19 +272,19 @@ int Collision(Organism *parent, Organism *List [])
 {
     return 1;
 
-    FOR_LOOP(OrganismCount, 10)
-    {
-        if (List[OrganismCount] != parent)
-        {
-            if (sqrt(Squared(List[OrganismCount]->Y - parent->Y) + Squared(List[OrganismCount]->X - parent->X)) < 30)
-            {
-                //  Print("Collision"); 
-                //  Print (OrganismCount);
-            }
-        }
-    }
+    //FOR_LOOP(OrganismCount, 10)
+    //{
+    //    if (List[OrganismCount] != parent)
+    //    {
+    //        if (sqrt(Squared(List[OrganismCount]->Y - parent->Y) + Squared(List[OrganismCount]->X - parent->X)) < 30)
+    //        {
+    //            //  Print("Collision"); 
+    //            //  Print (OrganismCount);
+    //        }
+    //    }
+    //}
 
-    return 1;
+    //return 1;
 }
 
 

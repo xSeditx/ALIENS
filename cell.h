@@ -113,7 +113,6 @@ public:
 
     std::uint16_t Number_of_Cells;
 
-    int X, Y;
     Vector2D Position,
         Potential,
         Velocity,
@@ -126,15 +125,10 @@ public:
 public:
 
     void Update(float Time_Step);
-    void Draw();
-    void Set_Position(int x, int y)
+    void Draw() const;
+    void Set_Position(float x, float y)
     {
-        Starting.X = x;
-        Starting.Y = y;
-        Position.X = x;
-        Position.Y = y;
-        Potential.X = x;
-        Potential.Y = y;
+        Starting = Position = Potential = { x, y };
     }
 
 
