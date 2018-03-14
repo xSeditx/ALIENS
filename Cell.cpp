@@ -100,18 +100,20 @@ Organism::Organism(unsigned char numcells, int x, int y)
 
 	FOR_LOOP(count, numcells)
 	{
-		cells.push_back(Cell(this));
+		cells.emplace_back(this);
 	}
 
-	float     X = Position.X,
+	float X = Position.X,
 		Y = Position.Y,
 
 		Xx = 0, Yy = 0,
 
 		angle = 0, Theta = 360 / Number_of_Cells,
 		dist = 15;
+
 	Xx = X;
 	Yy = Y;
+
 	for (Cell &c : cells)
 	{
 		angle += Theta;
@@ -141,19 +143,20 @@ Organism::Organism(unsigned char numcells, int x, int y)
 
 	for (Cell &C : cells)
 	{
-		int  I = 3,
-			H = 5,
-			O = 2;
-		Net *temp = new  Net(I, H, O);
-		C.Brain = *temp;
-		// C.Number_of_edges /= 2;
+		C.Brain = Net(
+			3, /* inputs */
+			5, /* hidden */
+			2  /* output */
+		);
 	}
 }
+
 Organism* Organism::Copy(Organism *Parent)
 {
 	*this = *Parent;
 	return this;
 }
+
 Organism* Organism::Mutate(Organism Parent)
 {
 

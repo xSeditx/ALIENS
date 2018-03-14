@@ -20,7 +20,7 @@ SIN[360];
 
 #include <string>     // std::string, std::stoi
 
-const int number_of_creatures = 55;
+const int number_of_creatures = 100;
 
 World WORLD(960, 1280);
 Neuron *GLOBAL_NEURON = nullptr;
@@ -97,6 +97,7 @@ void main()
 	float AverageAvg = 0;
 	Vector2D TEST;
 	int FrameSkip = 3;
+
 	while (LOOP_GAME())
 	{
 
@@ -148,7 +149,7 @@ void main()
 		///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-		if (Epoch%FrameSkip == 0)
+		if (Epoch % FrameSkip == 0)
 		{
 			_CLS;
 		}

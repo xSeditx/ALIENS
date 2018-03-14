@@ -41,7 +41,7 @@ WINDOW::WINDOW(int x, int y, int width, int height, char *title)
 	HEIGHT = height;
 	TITLE = title;
 
-	MOUSE_VELOCITY.x = MOUSE_VELOCITY.x = 0; MOUSE_ANGLE = 0;
+	MOUSE_VELOCITY.x = MOUSE_VELOCITY.y = 0; MOUSE_ANGLE = 0;
 
 	if (SDL_Init(SDL_INIT_VIDEO) != 0)std::cout << "Init Video Error" << std::endl;
 	HWND = SDL_CreateWindow(TITLE, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, WIDTH, HEIGHT, 0); if (!HWND)                       std::cout << "ERROR: Initializing SDL Window" << std::endl;
@@ -216,12 +216,8 @@ void SET_PIXEL(int x, int y, Uint32 COLOR)
 //SETS A PIXEL WITH BOUNDS CHECKING FOR THE SCREEN
 void SET_PIXELII(int x, int y, Uint32 COLOR)
 {
-
-	if (x < 0)x += SCREENWIDTH;
-	if (x >= SCREENWIDTH)x -= SCREENWIDTH;
-
-	if (y < 0)y += SCREENHEIGHT;
-	if (y > SCREENHEIGHT)y -= SCREENHEIGHT;
+	x = (SCREENWIDTH + (x % SCREENWIDTH)) % SCREENWIDTH;
+	y = (SCREENHEIGHT + (y % SCREENHEIGHT)) % SCREENHEIGHT;
 
 	SCREEN->WINDOW_PIXELS[(y * SCREEN->WIDTH) + x] = COLOR;
 }
