@@ -10,29 +10,24 @@
 
 double COS[360], SIN[360];
 
+#include<iostream>
+#include <string>     // std::string, std::stoi
 
 #include"cell.h"
-#include<iostream>
 #include "brain.h"
 #include "world.h" 
 #include "timer.h"
 
-#include <string>     // std::string, std::stoi
 
-const int number_of_creatures = 100;
+constexpr int number_of_creatures = 100;
 
 World WORLD(960, 1280);
-Neuron *GLOBAL_NEURON = nullptr;
-Neuron NARRAY[100];
-
 
 int KEYBOARD_HANDLER(SDL_Keycode sym)
 {
 	return 0;
 }
 
-
-#define NUBER_OF_NEURONS    10
 
 void Draw_Edges(int Xx, int Yy, Cell Parent)
 {
@@ -42,9 +37,9 @@ void Draw_Edges(int Xx, int Yy, Cell Parent)
 			X = Parent.Offset.X + Xx,
 			Y = Parent.Offset.Y + Yy;
 
-		SET_DRAW_COLOR(Parent.Color);                 // SETS DRAW COLOR TO THAT OF THE CELL
-		LINE2(X, Y, Child.Angle, Child.Distance *.5); // DRAWS EACH EDGE
-		FILLED_CIRCLE(X, Y, 5);                        // DRAWS EACH NODE
+		SET_DRAW_COLOR(Parent.Color);                   // SETS DRAW COLOR TO THAT OF THE CELL
+		LINE2(X, Y, Child.Angle, Child.Distance * .5f); // DRAWS EACH EDGE
+		FILLED_CIRCLE(X, Y, 5);                         // DRAWS EACH NODE
 		WORLD.SetSpace(X, Y, Parent.Color);
 	}
 }
@@ -61,12 +56,12 @@ void main()
 	WINDOW main(0, 0, 1280, 960, "Multicelled automatons");
 	SET_ACTIVE_WINDOW(&main);
 
-	Organism *Creature;
-	Organism *C[number_of_creatures];
+	Organism * Creature;
+	Organism * C[number_of_creatures];
 
 	FOR_LOOP(count, number_of_creatures)
 	{
-		C[count] = new Organism(10, 100 + (rand() % SCREENWIDTH - 100), 100 + (rand() % SCREENHEIGHT - 100)); //1 + rand()%90);
+		C[count] = new Organism(10, 100 + (rand() % SCREEN_WIDTH - 100), 100 + (rand() % SCREEN_HEIGHT - 100)); //1 + rand()%90);
 	}
 
 
@@ -78,7 +73,7 @@ void main()
 	FOR_LOOP(count, number_of_creatures)
 	{
 		x += xjump;
-		if (x > SCREENWIDTH - 100)
+		if (x > SCREEN_WIDTH - 100)
 		{
 			x = xjump; y += yjump;
 		}
@@ -88,7 +83,7 @@ void main()
 
 
 	Cell *Selected = nullptr;
-	_CLS;
+	clear_screen();
 	int Epoch = 0;
 	int Generation = 0;
 
@@ -149,7 +144,7 @@ void main()
 
 		if (Epoch % FrameSkip == 0)
 		{
-			_CLS;
+			clear_screen();
 		}
 
 		FOR_LOOP(count, number_of_creatures)
@@ -167,7 +162,6 @@ void main()
 				}
 
 			}
-
 
 			if (Selected != nullptr)
 			{
@@ -208,11 +202,10 @@ void main()
 
 		if (Epoch%FrameSkip == 0)
 		{
-			_SYNC;
+			SYNC();
 		}
-
 	}
 
 	// CLEAN UP
-	delete (*C);
+	// delete *C;
 }

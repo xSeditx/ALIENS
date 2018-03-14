@@ -24,8 +24,8 @@ WINDOW *SCREEN = { 0 };
 int WINDOW_OFFSET = 1;
 int LEFT_BOUNDS = 0 + WINDOW_OFFSET;
 int TOP_BOUNDS = 0 + WINDOW_OFFSET;
-int RIGHT_BOUNDS = SCREENWIDTH - WINDOW_OFFSET;
-int BOTTOM_BOUNDS = SCREENHEIGHT - WINDOW_OFFSET;
+int RIGHT_BOUNDS = SCREEN_WIDTH - WINDOW_OFFSET;
+int BOTTOM_BOUNDS = SCREEN_HEIGHT - WINDOW_OFFSET;
 
 float Cos[360];// = {0}, 
 float Sin[360]; // = {0};
@@ -35,7 +35,8 @@ float Sin[360]; // = {0};
 
 WINDOW::WINDOW(int x, int y, int width, int height, char *title)
 {
-	X = x;  Y = y;
+	X = x;
+	Y = y;
 	WIDTH = width;
 	HEIGHT = height;
 	TITLE = title;
@@ -217,8 +218,8 @@ void SET_PIXEL(int x, int y, Uint32 COLOR)
 //SETS A PIXEL WITH BOUNDS CHECKING FOR THE SCREEN
 void SET_PIXELII(int x, int y, Uint32 COLOR)
 {
-	x = (SCREENWIDTH + (x % SCREENWIDTH)) % SCREENWIDTH;
-	y = (SCREENHEIGHT + (y % SCREENHEIGHT)) % SCREENHEIGHT;
+	x = (SCREEN_WIDTH + (x % SCREEN_WIDTH)) % SCREEN_WIDTH;
+	y = (SCREEN_HEIGHT + (y % SCREEN_HEIGHT)) % SCREEN_HEIGHT;
 
 	SCREEN->WINDOW_PIXELS[(y * SCREEN->WIDTH) + x] = COLOR;
 }

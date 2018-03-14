@@ -1,7 +1,6 @@
 #pragma once
 
 #define SDL_MAIN_HANDLED
-#define _SDL_
 #include <SDL.h>
 
 #define GetRandom( min, max )     ((rand() % (int)(((max) + 1) - (min))) + (min))  
@@ -13,12 +12,9 @@
 #define LOOP(x)                   for(int count = 0; count < (x); count++)
 #define FOR_LOOP(x,c)             for(int x = 0; x < (c); x++)
 
-#define SCREENWIDTH        1280 //680 
-#define SCREENHEIGHT       960 //460 
 
-#define _LOOP_GAME  LOOP_GAME()        // This is being done for future compatibility with various Graphics Libraries
-#define _CLS        clear_screen()     //
-#define _SYNC       SYNC()        //
+constexpr unsigned int SCREEN_WIDTH = 1280; 
+constexpr unsigned int SCREEN_HEIGHT = 960; 
 
 
 extern double COS[360], SIN[360];
@@ -88,34 +84,34 @@ public:
 };
 
 
-extern   int       KEYBOARD_HANDLER(SDL_Keycode sym);
+int       KEYBOARD_HANDLER(SDL_Keycode sym);
 
-extern   float     NEWX(float x, float dist, float angle);
-extern   float     NEWY(float y, float dist, float angle);
+float     NEWX(float x, float dist, float angle);
+float     NEWY(float y, float dist, float angle);
 
-extern   void      SYNC();
-extern   void      clear_screen();
-extern   void      PRINT_SCREEN(char *text);
-extern   void      SET_PIXEL(int, int, Uint32);
-extern   void      SET_PIXELII(int, int, Uint32);
-extern   void      SET_DRAW_COLOR(unsigned long Col);
-extern   void      LINE(int x1, int y1, int x2, int y2);
-extern   void      LINE2(int x, int y, float Angle, int Length);
-extern   void      CIRCLE(int x, int y, float radius);
-extern   void      FILLED_CIRCLE(int x, int y, float radius);
-extern   void      BOX(int X1, int Y1, int X2, int Y2);
-extern   void      FILLED_BOX(int X1, int Y1, int X2, int Y2);
+void      SYNC();
+void      clear_screen();
+void      PRINT_SCREEN(char *text);
+void      SET_PIXEL(int, int, Uint32);
+void      SET_PIXELII(int, int, Uint32);
+void      SET_DRAW_COLOR(unsigned long Col);
+void      LINE(int x1, int y1, int x2, int y2);
+void      LINE2(int x, int y, float Angle, int Length);
+void      CIRCLE(int x, int y, float radius);
+void      FILLED_CIRCLE(int x, int y, float radius);
+void      BOX(int X1, int Y1, int X2, int Y2);
+void      FILLED_BOX(int X1, int Y1, int X2, int Y2);
 
 
-extern   float    FindAngle(SDL_Point A, SDL_Point B);
+float    FindAngle(SDL_Point A, SDL_Point B);
 
-extern   bool      Is_CLICK(int X, int Y);
-extern   bool      LOOP_GAME();
-extern   bool      SET_ACTIVE_WINDOW(WINDOW *active);
+bool      Is_CLICK(int X, int Y);
+bool      LOOP_GAME();
+bool      SET_ACTIVE_WINDOW(WINDOW *active);
 
-extern   WINDOW   *SCREEN;
-extern   int       WINDOW_OFFSET;
-extern   int       LEFT_BOUNDS;
-extern   int       TOP_BOUNDS;
-extern   int       RIGHT_BOUNDS;
-extern   int       BOTTOM_BOUNDS;
+extern WINDOW   *SCREEN;
+extern int       WINDOW_OFFSET;
+extern int       LEFT_BOUNDS;
+extern int       TOP_BOUNDS;
+extern int       RIGHT_BOUNDS;
+extern int       BOTTOM_BOUNDS;

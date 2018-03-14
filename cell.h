@@ -15,8 +15,8 @@
 #define MAX_CREATURES      1000
 #define MAX_CELLS          30
 
-#define WORLD_WIDTH        SCREENWIDTH  
-#define WORLD_HEIGHT       SCREENHEIGHT
+#define WORLD_WIDTH        SCREEN_WIDTH  
+#define WORLD_HEIGHT       SCREEN_HEIGHT
 
 #define NUM_NEURONS        5
 #define NUM_RESPONSES      3
@@ -52,8 +52,6 @@ public:
 		Size,
 		Mass;
 
-
-	Cell *PTR_THIS;
 	unsigned char Number_of_edges;
 	unsigned long Color;
 
@@ -125,8 +123,6 @@ public:
 	Organism::~Organism() = default;
 
 	Organism(unsigned char numcells, int x, int y);
-
-	unsigned char Number_of_Cells;
 
 	int ID;
 	int X, Y;

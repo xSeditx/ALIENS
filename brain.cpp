@@ -2,8 +2,6 @@
 #include"brain.h"
 #include"window.h"
 
-extern Neuron *GLOBAL_NEURON; // DEBUG SHIT
-extern Neuron  NARRAY[100];
 
 Synapse::Synapse()
 {
