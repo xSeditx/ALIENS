@@ -5,47 +5,47 @@
 class World
 {
 public:
-	World(int x, int y)
-	{
-		Size.Height = x;
-		Size.Width = y;
-		Buffer = new int[x * y];
-		memset(Buffer, 0, x * y * sizeof(int));
-	}
-	struct size
-	{
-		int Height,
-			Width;
-	}Size;
+    World(int x, int y)
+    {
+        Size.Height = x;
+        Size.Width = y;
+        Buffer = new int[x * y];
+        memset(Buffer, 0, x * y * sizeof(int));
+    }
+    struct size
+    {
+        int Height,
+            Width;
+    }Size;
 
-	struct camera
-	{
-		struct pos
-		{
-			int X,
-				Y;
-		}Position;
-		struct view
-		{
-			int Height,
-				Width;
-		}ViewPort;
-	}Camera;
+    struct camera
+    {
+        struct pos
+        {
+            int X,
+                Y;
+        }Position;
+        struct view
+        {
+            int Height,
+                Width;
+        }ViewPort;
+    }Camera;
 
-	int CheckSpace(int x, int y)
-	{
-		return Buffer[x + Size.Width * y];
-	}
+    int CheckSpace(int x, int y)
+    {
+        return Buffer[x + Size.Width * y];
+    }
 
-	void SetSpace(int x, int y, int value)
-	{
-		if (y < 0) return;
-		// Buffer[x + Size.Width * y] = value;
-	}
+    void SetSpace(int x, int y, int value)
+    {
+        if (y < 0) return;
+        // Buffer[x + Size.Width * y] = value;
+    }
 
-	std::vector<Organism>  Creatures;
+    std::vector<Organism>  Creatures;
 
-	int *Buffer;
+    int *Buffer;
 };
 
 

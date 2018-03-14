@@ -37,67 +37,67 @@ class Organism; struct Edge; // Forward Declaration
 class Cell
 {
 public:
-	Cell();
-	~Cell();
-	Cell(Organism *Parent);
+    Cell();
+    ~Cell();
+    Cell(Organism *Parent);
 
 
-	Vector2D Offset,
-		Starting,
-		Velocity,
-		Force;
+    Vector2D Offset,
+        Starting,
+        Velocity,
+        Force;
 
-	std::uint16_t ID;
-	float         Friction;
+    std::uint16_t ID;
+    float         Friction;
 
-	float Angle,
-		Speed,
-		Mass;
+    float Angle,
+        Speed,
+        Mass;
 
-	unsigned long Color;
+    unsigned long Color;
 
-	Organism *Parent;
-	std::vector<Edge> edges;
+    Organism *Parent;
+    std::vector<Edge> edges;
 
-	Net Brain;
+    Net Brain;
 
-	void See();
-	void Set_Position(int x, int y)
-	{
-		Offset.X = x;
-		Offset.Y = y;
-		Starting.X = x;
-		Starting.Y = y;
-	}
+    void See();
+    void Set_Position(int x, int y)
+    {
+        Offset.X = x;
+        Offset.Y = y;
+        Starting.X = x;
+        Starting.Y = y;
+    }
 
-	int Collision();
+    int Collision();
 };
 
 struct Edge
 {
-	Edge() = default;
-	~Edge() = default;
-	Edge(Cell *parent, Cell *other, unsigned char tension);
+    Edge() = default;
+    ~Edge() = default;
+    Edge(Cell *parent, Cell *other, unsigned char tension);
 
 
-	Cell *Parent_ptr,
-		*Child_ptr;
+    Cell *Parent_ptr,
+        *Child_ptr;
 
-	int Child_ID;
+    int Child_ID;
 
-	Vector2D  Displacement,
-		RestDistance;
+    Vector2D Displacement,
+        RestDistance;
 
-	float Distance,
-		Tension,
-		Angle;
+    float Distance,
+        Tension,
+        Angle;
 
-	float Get_Distance(const Cell &child)
-	{
-		float ret = sqrtf(Squared(Parent_ptr->Offset.X - child.Offset.X) + Squared(Parent_ptr->Offset.Y - child.Offset.Y));
-		return ret;
-	}
-	//    unsigned long Color;
+    float Get_Distance(const Cell &child)
+    {
+        float ret = sqrtf(Squared(Parent_ptr->Offset.X - child.Offset.X) + Squared(Parent_ptr->Offset.Y - child.Offset.Y));
+        return ret;
+    }
+    //    unsigned long Color;
 };
 
 
@@ -108,39 +108,39 @@ struct Edge
 class Organism
 {
 public:
-	Organism::Organism() = default;
-	Organism::~Organism() = default;
+    Organism::Organism() = default;
+    Organism::~Organism() = default;
 
-	Organism(unsigned char numcells, int x, int y);
+    Organism(unsigned char numcells, int x, int y);
 
-	int ID;
-	int X, Y;
-	Vector2D Position,
-		Potential,
-		Velocity,
-		Starting;
+    int ID;
+    int X, Y;
+    Vector2D Position,
+        Potential,
+        Velocity,
+        Starting;
 
-	float Distance_moved;
+    float Distance_moved;
 
-	std::vector<Cell> cells;
+    std::vector<Cell> cells;
 
 public:
 
-	void Update(float Time_Step);
-	void Draw();
-	void Set_Position(int x, int y)
-	{
-		Starting.X = x;
-		Starting.Y = y;
-		Position.X = x;
-		Position.Y = y;
-		Potential.X = x;
-		Potential.Y = y;
-	}
+    void Update(float Time_Step);
+    void Draw();
+    void Set_Position(int x, int y)
+    {
+        Starting.X = x;
+        Starting.Y = y;
+        Position.X = x;
+        Position.Y = y;
+        Potential.X = x;
+        Potential.Y = y;
+    }
 
 
-	Organism* Copy(Organism *Parent);
-	Organism* Mutate(Organism  Parent);
+    Organism* Copy(Organism *Parent);
+    Organism* Mutate(Organism  Parent);
 };
 
 extern int Collision(Organism *parent, Organism *List []);

@@ -8,11 +8,11 @@ class Neuron;
 class Synapse
 {
 public:
-	Synapse(); ~Synapse();
+    Synapse(); ~Synapse();
 
-	int CREATOR;
-	float     Weight;
-	Neuron   *Other;
+    int CREATOR;
+    float     Weight;
+    Neuron   *Other;
 
 };
 extern  Synapse   MakeSynapse(float value, Neuron *parent, Neuron *other);
@@ -21,27 +21,27 @@ extern  Synapse   MakeSynapse(float value, Neuron *parent, Neuron *other);
 class Neuron
 {
 public:
-	Neuron(); ~Neuron();
+    Neuron(); ~Neuron();
 
-	float Value;
+    float Value;
 
-	std::vector<Synapse> Synapses;
+    std::vector<Synapse> Synapses;
 };
 
 class Layer
 {
 public:
-	Layer(); ~Layer();
+    Layer() = default;
+    ~Layer() = default;
 
-	enum LType
-	{
-		Input,
-		Hidden,
-		Output
-	};   LType LayerType;
+    enum LType
+    {
+        Input,
+        Hidden,
+        Output
+    };   LType LayerType;
 
-	int Number_of_Neurons;
-	std::vector<Neuron> Neurons;
+    std::vector<Neuron> Neurons;
 
 };
 
@@ -49,14 +49,14 @@ public:
 class Net
 {
 public:
-	Net(); ~Net();
-	Net(int inputs, int hidden, int outputs);
+    Net() = default;
+    ~Net() = default;
+    Net(std::size_t inputs, std::size_t hidden, std::size_t outputs);
 
-	int Number_of_Layers;
-	std::vector<Layer> Layers;
+    std::vector<Layer> Layers;
 
-	void Think();
-	void Draw();
+    void Think();
+    void Draw();
 };
 
 extern inline float Sigmoid(float x);

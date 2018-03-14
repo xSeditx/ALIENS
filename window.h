@@ -2,6 +2,7 @@
 
 #define SDL_MAIN_HANDLED
 #include <SDL.h>
+#include <cstddef>
 
 #define GetRandom( min, max )     ((rand() % (int)(((max) + 1) - (min))) + (min))  
 #define RANDOM(x)                 ((rand() * (1.0 / (1.0 + RAND_MAX))) * (x))
@@ -9,12 +10,12 @@
 
 #define RADIANS(angle)            ((angle) * .0174532925199444)
 
-#define LOOP(x)                   for(int count = 0; count < (x); count++)
-#define FOR_LOOP(x,c)             for(int x = 0; x < (c); x++)
+#define LOOP(x)                   for(std::size_t count = 0; count < (x); count++)
+#define FOR_LOOP(x,c)             for(std::size_t x = 0; x < (c); x++)
 
 
-constexpr unsigned int SCREEN_WIDTH = 1280; 
-constexpr unsigned int SCREEN_HEIGHT = 960; 
+constexpr std::size_t SCREEN_WIDTH = 1280;
+constexpr std::size_t SCREEN_HEIGHT = 960;
 
 
 extern double COS[360], SIN[360];
@@ -25,7 +26,7 @@ extern double COS[360], SIN[360];
 template <typename T>
 static constexpr int color_from_rgb(T r, T g, T b)
 {
-	return static_cast<int>(b) + (static_cast<int>(g) << 8) + (static_cast<int>(r) << 16);
+    return static_cast<int>(b) + (static_cast<int>(g) << 8) + (static_cast<int>(r) << 16);
 }
 
 
@@ -33,53 +34,53 @@ class WINDOW
 {
 
 public:
-	WINDOW() = default;
-	~WINDOW() = default;
+    WINDOW() = default;
+    ~WINDOW() = default;
 
-	WINDOW(int, int, int, int, char*);
-
-
-	int X,
-		Y,
-		WIDTH,
-		HEIGHT;
-
-	char *TITLE;
+    WINDOW(int, int, int, int, char*);
 
 
-	SDL_Window             *HWND;
-	SDL_Texture            *BACK_BUFFER;
-	SDL_Renderer           *RENDER;
+    int X,
+        Y,
+        WIDTH,
+        HEIGHT;
 
-	Uint32                  *WINDOW_PIXELS;
+    char *TITLE;
 
-	Uint32                  WINDOW_FORMAT;
-	SDL_Event               EVENT;
-	SDL_Surface            *WINDOW_SURFACE;
-	SDL_PixelFormat        *MAPPING_FORMAT;
-	SDL_Point               MOUSE_POSITION;
-	SDL_Point               MOUSE_VELOCITY;
 
-	double MOUSE_ANGLE;
-	struct
-	{
-		bool LEFT;
-		bool RIGHT;
-	} MOUSE_BUTTON;
+    SDL_Window             *HWND;
+    SDL_Texture            *BACK_BUFFER;
+    SDL_Renderer           *RENDER;
 
-	unsigned long DRAW_COLOR;
-	int  FPS;
-	void SET_DRAW_COLOR(unsigned long Col);
+    Uint32                  *WINDOW_PIXELS;
 
-	double TIME;
+    Uint32                  WINDOW_FORMAT;
+    SDL_Event               EVENT;
+    SDL_Surface            *WINDOW_SURFACE;
+    SDL_PixelFormat        *MAPPING_FORMAT;
+    SDL_Point               MOUSE_POSITION;
+    SDL_Point               MOUSE_VELOCITY;
 
-	int   FRAME_COUNTER;
-	int   CYCLE_COUNTER;
+    double MOUSE_ANGLE;
+    struct
+    {
+        bool LEFT;
+        bool RIGHT;
+    } MOUSE_BUTTON;
 
-	int CyclePerSecond;
+    unsigned long DRAW_COLOR;
+    int  FPS;
+    void SET_DRAW_COLOR(unsigned long Col);
 
-	float CYCLE_TIMER;
-	float TIMER;
+    double TIME;
+
+    int   FRAME_COUNTER;
+    int   CYCLE_COUNTER;
+
+    int CyclePerSecond;
+
+    float CYCLE_TIMER;
+    float TIMER;
 
 };
 
