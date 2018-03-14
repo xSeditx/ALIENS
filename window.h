@@ -1,4 +1,5 @@
 #pragma once
+
 #define SDL_MAIN_HANDLED
 #define _SDL_
 #include <SDL.h>
@@ -36,16 +37,18 @@ class WINDOW
 {
 
 public:
-	WINDOW(); ~WINDOW();
+	WINDOW() = default;
+	~WINDOW() = default;
+
 	WINDOW(int, int, int, int, char*);
 
 
-	int       X,
+	int X,
 		Y,
 		WIDTH,
 		HEIGHT;
 
-	char     *TITLE;
+	char *TITLE;
 
 
 	SDL_Window             *HWND;
@@ -58,17 +61,17 @@ public:
 	SDL_Event               EVENT;
 	SDL_Surface            *WINDOW_SURFACE;
 	SDL_PixelFormat        *MAPPING_FORMAT;
-	SDL_Point               MOUSE_POSITION,
-		MOUSE_VELOCITY;
+	SDL_Point               MOUSE_POSITION;
+	SDL_Point               MOUSE_VELOCITY;
 
-	double                  MOUSE_ANGLE;
+	double MOUSE_ANGLE;
 	struct
 	{
-		bool LEFT,
-			RIGHT;
-	}MOUSE_BUTTON;
+		bool LEFT;
+		bool RIGHT;
+	} MOUSE_BUTTON;
 
-	unsigned long           DRAW_COLOR;
+	unsigned long DRAW_COLOR;
 	int  FPS;
 	void SET_DRAW_COLOR(unsigned long Col);
 
@@ -116,16 +119,3 @@ extern   int       LEFT_BOUNDS;
 extern   int       TOP_BOUNDS;
 extern   int       RIGHT_BOUNDS;
 extern   int       BOTTOM_BOUNDS;
-
-
-
-
-struct stack_array
-{
-	int ITERATOR;
-	int SIZE;
-	int *ARRAY;
-	int ADD();
-	int REMOVE();
-	int GETLAST();
-};

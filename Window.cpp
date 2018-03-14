@@ -32,8 +32,7 @@ float Sin[360]; // = {0};
 
 
 // CONSTRUCTS A BASIC WINDOW AND BACKBUFFER ASSOCIATED WITH WINDOW
-WINDOW::~WINDOW()
-{ }
+
 WINDOW::WINDOW(int x, int y, int width, int height, char *title)
 {
 	X = x;  Y = y;
@@ -145,12 +144,13 @@ void clear_screen()
 	SCREEN->TIMER = SDL_GetTicks();
 
 	//SDL_RenderClear(SCREEN->RENDER);
-	memset(SCREEN->WINDOW_PIXELS, 0, SCREEN->WIDTH * SCREEN->HEIGHT * sizeof(Uint32));
+	memset(SCREEN->WINDOW_PIXELS, 0, SCREEN->WIDTH * SCREEN->HEIGHT * sizeof(*SCREEN->WINDOW_PIXELS));
 
 }
+
 void SYNC()
 {
-	SDL_UpdateTexture(SCREEN->BACK_BUFFER, NULL, SCREEN->WINDOW_PIXELS, SCREEN->WIDTH * sizeof(Uint32)); // SLOW
+	SDL_UpdateTexture(SCREEN->BACK_BUFFER, NULL, SCREEN->WINDOW_PIXELS, SCREEN->WIDTH * sizeof(*SCREEN->WINDOW_PIXELS)); // SLOW
 	SDL_RenderCopy(SCREEN->RENDER, SCREEN->BACK_BUFFER, NULL, NULL);
 	SDL_RenderPresent(SCREEN->RENDER);
 }
