@@ -110,6 +110,9 @@ public:
     Organism(std::size_t id, unsigned char numcells, int x, int y);
 
     std::size_t ID;
+
+    std::uint16_t Number_of_Cells;
+
     int X, Y;
     Vector2D Position,
         Potential,

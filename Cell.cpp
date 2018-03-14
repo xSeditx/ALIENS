@@ -27,7 +27,8 @@
 
 Cell::Cell(Organism *parent)
 {
-    ID = parent->cells.size();
+    ID = parent->Number_of_Cells++;
+
     Offset.X = RANDOM(300);
     Offset.Y = RANDOM(300);
     Starting.X = Offset.X;
@@ -74,6 +75,7 @@ void Cell::See()
 
 Organism::Organism(std::size_t id, unsigned char numcells, int x, int y)
     : ID(id)
+    , Number_of_Cells(0)
     , Distance_moved(0.0)
 {
     Position.X = Starting.X = Potential.X = x;
@@ -134,13 +136,14 @@ Organism* Organism::Copy(Organism *Parent)
 
 Organism* Organism::Mutate(Organism Parent)
 {
+    this->Number_of_Cells = Parent.Number_of_Cells;
     this->cells = Parent.cells;
 
     this->Velocity.X = 0;
     this->Velocity.Y = 0;
     this->Distance_moved = 0;
 
-    FOR_LOOP(cellcount, this->cells.size())
+    FOR_LOOP(cellcount, Parent.Number_of_Cells)
     {
         this->cells[cellcount].Offset = this->cells[cellcount].Starting;
         this->cells[cellcount].Velocity.X = 0;
@@ -210,8 +213,8 @@ void Organism::Update(float Time_Step)
         Ymove += Parent.Offset.Y;
     }
 
-    Xmove /= this->cells.size();
-    Ymove /= this->cells.size();
+    Xmove /= this->Number_of_Cells;
+    Ymove /= this->Number_of_Cells;
     X = Xmove + Potential.X;
     Y = Ymove + Potential.Y;
     // FILLED_CIRCLE( X,Y, 14);
@@ -251,10 +254,8 @@ void Organism::Update(float Time_Step)
             cells[off].Brain.Layers[0].Neurons[0].Value = cells[off].Force.Y; //.Brain.Layers[2].Neurons[0].Value;
         }
 
-
-        if (Parent.Angle < 0) Parent.Angle += 360;
-        if (Parent.Angle > 360) Parent.Angle -= 0;
-
+        while (Parent.Angle < 0) Parent.Angle += 360;
+        while (Parent.Angle >= 360) Parent.Angle -= 360;
     }
 
     for (Cell &C : cells)
