@@ -1,0 +1,104 @@
+﻿C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets(387,5): warning MSB8028: The intermediate directory (Debug\) contains files shared from another project (Project5.vcxproj).  This can lead to incorrect clean and rebuild behavior.
+  Window.cpp
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.16299.0\um\wingdi.h(1856): warning C4005: 'RGB': macro redefinition
+  c:\users\ermic\documents\projects\cpp\neuralevolution\window.h(15): note: see previous definition of 'RGB'
+Window.cpp(69): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+Window.cpp(70): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+Window.cpp(85): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+Window.cpp(87): warning C4244: '=': conversion from 'Uint32' to 'float', possible loss of data
+Window.cpp(142): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+Window.cpp(144): warning C4244: '=': conversion from 'Uint32' to 'float', possible loss of data
+Window.cpp(184): warning C4244: 'return': conversion from 'double' to 'float', possible loss of data
+Window.cpp(188): warning C4244: 'return': conversion from 'double' to 'float', possible loss of data
+Window.cpp(250): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+Window.cpp(252): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+Window.cpp(266): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+Window.cpp(269): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+Window.cpp(270): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+Window.cpp(271): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+Window.cpp(277): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+Window.cpp(284): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+Window.cpp(285): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+Window.cpp(287): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+Window.cpp(294): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+Window.cpp(298): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+Window.cpp(299): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+Window.cpp(300): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+Window.cpp(391): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+Window.cpp(391): warning C4244: 'return': conversion from 'double' to 'float', possible loss of data
+  Generating Code...
+  Compiling...
+  brain.cpp
+brain.cpp(108): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+brain.cpp(118): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+brain.cpp(162): warning C4244: 'return': conversion from 'double' to 'float', possible loss of data
+  Main.cpp
+c:\users\ermic\documents\projects\cpp\neuralevolution\cell.h(71): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\ermic\documents\projects\cpp\neuralevolution\cell.h(72): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\ermic\documents\projects\cpp\neuralevolution\cell.h(73): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\ermic\documents\projects\cpp\neuralevolution\cell.h(74): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\ermic\documents\projects\cpp\neuralevolution\cell.h(109): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+c:\users\ermic\documents\projects\cpp\neuralevolution\cell.h(148): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\ermic\documents\projects\cpp\neuralevolution\cell.h(149): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\ermic\documents\projects\cpp\neuralevolution\cell.h(150): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\ermic\documents\projects\cpp\neuralevolution\cell.h(151): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\ermic\documents\projects\cpp\neuralevolution\cell.h(152): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\ermic\documents\projects\cpp\neuralevolution\cell.h(153): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+Main.cpp(48): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+Main.cpp(48): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+Main.cpp(49): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+Main.cpp(50): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+Main.cpp(168): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+Main.cpp(185): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+Main.cpp(184): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+Main.cpp(208): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+  Cell.cpp
+c:\users\ermic\documents\projects\cpp\neuralevolution\cell.h(71): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\ermic\documents\projects\cpp\neuralevolution\cell.h(72): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\ermic\documents\projects\cpp\neuralevolution\cell.h(73): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\ermic\documents\projects\cpp\neuralevolution\cell.h(74): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\ermic\documents\projects\cpp\neuralevolution\cell.h(109): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+c:\users\ermic\documents\projects\cpp\neuralevolution\cell.h(148): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\ermic\documents\projects\cpp\neuralevolution\cell.h(149): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\ermic\documents\projects\cpp\neuralevolution\cell.h(150): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\ermic\documents\projects\cpp\neuralevolution\cell.h(151): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\ermic\documents\projects\cpp\neuralevolution\cell.h(152): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\ermic\documents\projects\cpp\neuralevolution\cell.h(153): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+Cell.cpp(39): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+Cell.cpp(40): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+Cell.cpp(48): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+Cell.cpp(49): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+Cell.cpp(69): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+Cell.cpp(74): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+Cell.cpp(75): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+Cell.cpp(76): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+Cell.cpp(96): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+Cell.cpp(97): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+Cell.cpp(111): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+Cell.cpp(118): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+Cell.cpp(119): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+Cell.cpp(134): warning C4244: 'argument': conversion from 'double' to 'unsigned char', possible loss of data
+Cell.cpp(135): warning C4244: 'argument': conversion from 'double' to 'unsigned char', possible loss of data
+Cell.cpp(204): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+Cell.cpp(216): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+Cell.cpp(230): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+Cell.cpp(252): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+Cell.cpp(253): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+Cell.cpp(258): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+Cell.cpp(274): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+Cell.cpp(279): warning C4305: 'initializing': truncation from 'double' to 'float'
+Cell.cpp(302): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+Cell.cpp(303): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+Cell.cpp(330): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+Cell.cpp(345): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+Cell.cpp(346): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+  Generating Code...
+  Compiling...
+  Vertex2D.cpp
+Vertex2D.cpp(86): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+Vertex2D.cpp(91): warning C4244: '-=': conversion from 'double' to 'float', possible loss of data
+Vertex2D.cpp(96): warning C4244: '/=': conversion from 'double' to 'float', possible loss of data
+Vertex2D.cpp(101): warning C4244: '*=': conversion from 'double' to 'float', possible loss of data
+Vertex2D.cpp(151): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+  Generating Code...
+  NeuralEvolution.vcxproj -> C:\Users\ermic\Documents\Projects\Cpp\NeuralEvolution\Debug\NeuralEvolution.exe
