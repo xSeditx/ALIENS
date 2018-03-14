@@ -8,8 +8,7 @@
 // TARGET: WINDOW *SCREEN pointer. This is where all functions read from and draw to.                                                                                                                                                                                                                                                                                                 
 //=============================================================================================================                                                                                                                                                                                                                                                                                                              
 
-double COS[360],
-SIN[360];
+double COS[360], SIN[360];
 
 
 #include"cell.h"
@@ -39,7 +38,6 @@ void Draw_Edges(int Xx, int Yy, Cell Parent)
 {
 	for (Edge &Child : Parent.edges)
 	{
-
 		float
 			X = Parent.Offset.X + Xx,
 			Y = Parent.Offset.Y + Yy;
@@ -56,7 +54,7 @@ void main()
 	for (int Angle = 0; Angle < 360; Angle++)
 	{
 		COS[Angle] = cos(RADIANS(Angle));
-		SIN[Angle] = cos(RADIANS(Angle));
+		SIN[Angle] = sin(RADIANS(Angle));
 	}
 
 	srand(1500);

@@ -11,33 +11,36 @@
 
 #include"Vertex2D.h"
 
+
 Vector2D::Vector2D()
 {
 	X = 0.0f; Y = 0.0f;
 }
 Vector2D::Vector2D(const float& x, const float& y)
 {
-	this->X = x; this->Y = y;
+	this->X = x;
+	this->Y = y;
 }
 
-//==================================================================================================================================
-//__________________________________________________________________________________________________________________________________
 
 Vector2D& Vector2D::add(const Vector2D& other)
 {
 	X += other.X; Y += other.Y;
 	return *this;
 }
+
 Vector2D& Vector2D::subtract(const Vector2D& other)
 {
 	X -= other.X; Y -= other.Y;
 	return *this;
 }
+
 Vector2D& Vector2D::divide(const Vector2D& other)
 {
 	X /= other.X; Y /= other.Y;
 	return *this;
 }
+
 Vector2D& Vector2D::multiply(const Vector2D& other)
 {
 	X *= other.X; Y *= other.Y;
@@ -48,14 +51,17 @@ Vector2D operator +(Vector2D left, const Vector2D& right)
 {
 	return left.add(right);
 }
+
 Vector2D operator -(Vector2D left, const Vector2D& right)
 {
 	return left.subtract(right);
 }
+
 Vector2D operator /(Vector2D left, const Vector2D& right)
 {
 	return left.divide(right);
 }
+
 Vector2D operator *(Vector2D left, const Vector2D& right)
 {
 	return left.multiply(right);
@@ -65,14 +71,17 @@ Vector2D& Vector2D::operator +=(const Vector2D& other)
 {
 	return add(other);
 }
+
 Vector2D& Vector2D::operator -=(const Vector2D& other)
 {
 	return subtract(other);
 }
+
 Vector2D& Vector2D::operator *=(const Vector2D& other)
 {
 	return multiply(other);
 }
+
 Vector2D& Vector2D::operator /=(const Vector2D& other)
 {
 	return divide(other);

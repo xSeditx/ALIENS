@@ -63,10 +63,9 @@ Net::Net(int inputs, int hidden, int outputs)
 
 	FOR_LOOP(N, inputs)
 	{
-		Neuron *nur = new Neuron();
-		Input->Neurons.push_back(*nur);
-
+		Input->Neurons.emplace_back();
 	}
+
 	Layers.push_back(*Input);
 
 	//___________________________Hidden__________________________________________________________________
@@ -77,8 +76,7 @@ Net::Net(int inputs, int hidden, int outputs)
 
 	FOR_LOOP(H, hidden)
 	{
-		Neuron *hnur = new Neuron();
-		Hidden->Neurons.push_back(*hnur);
+		Hidden->Neurons.emplace_back();
 	}
 	Layers.push_back(*Hidden);
 
@@ -90,8 +88,7 @@ Net::Net(int inputs, int hidden, int outputs)
 
 	FOR_LOOP(O, outputs)
 	{
-		Neuron *onur = new Neuron();
-		Output->Neurons.push_back(*onur);
+		Output->Neurons.emplace_back();
 	}
 
 	Layers.push_back(*Output);
@@ -121,13 +118,9 @@ Net::Net(int inputs, int hidden, int outputs)
 	}
 }
 
-
-
 void Net::Think()
 {
-
-	float
-		Sum = 0.0;
+	float Sum = 0.0;
 
 	FOR_LOOP(HiddenCount, Layers[1].Number_of_Neurons)
 	{
@@ -151,18 +144,15 @@ void Net::Think()
 		Layers[2].Neurons[OutputCount].Value = Activation(Sum);
 	}
 }
-void Net::Draw()
-{ }
+void Net::Draw() { }
 
 
-
-
-inline float Sigmoid(float x)
+static inline float Sigmoid(float x)
 {
 	return 1.0 / (1.0 + exp(-x));
 }
-inline float Activation(float x)
+
+static inline float Activation(float x)
 {
-	float y = (Sigmoid(x) * 2) - 1;
-	return y;
+	return (Sigmoid(x) * 2) - 1;
 }

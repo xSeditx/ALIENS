@@ -4,7 +4,7 @@
 #include <SDL.h>
 
 #define GetRandom( min, max )     ((rand() % (int)(((max) + 1) - (min))) + (min))  
-#define RANDOM(x)                 ((rand() * (1.0 / (1.0 + RAND_MAX))) * x)
+#define RANDOM(x)                 ((rand() * (1.0 / (1.0 + RAND_MAX))) * (x))
 #define RANDOM_RANGE(x)           (RANDOM(x * 2) - (x))
 
 #ifdef RGB
@@ -12,7 +12,7 @@
 #endif
 
 #define RGB(r,g,b)                ((int)b + ((int)g<< 8) + ((int)r << 16))
-#define RADIANS(angle)            (angle * .0174532925199444)
+#define RADIANS(angle)            ((angle) * .0174532925199444)
 
 #define LOOP(x)                   for(int count = 0; count < (x); count++)
 #define FOR_LOOP(x,c)             for(int x = 0; x < (c); x++)

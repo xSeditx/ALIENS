@@ -34,7 +34,6 @@ Cell::~Cell()
 
 Cell::Cell(Organism *parent)
 {
-
 	ID = parent->Number_of_Cells++;
 	Offset.X = Potential.X = RANDOM(300);
 	Offset.Y = Potential.Y = RANDOM(300);
@@ -60,36 +59,27 @@ Cell::Cell(Organism *parent)
 
 void Cell::See()
 {
-
 	float Xx = 0,
 		Yy = 0;
 
 	float X = Offset.X + Parent->Potential.X,
 		Y = Offset.Y + Parent->Potential.Y;
-	int Ang = Angle;
+
 	int FOV = 10;
-	// for(int Ang = (Angle - FOV);Ang < (Angle + FOV); Ang +=10){
 	for (float dist = 0; dist < 8; dist++)
 	{
-		Xx = X + dist * _COS(Ang);
-		Yy = Y + dist * _SIN(Ang);
+		Xx = X + dist * _COS(Angle);
+		Yy = Y + dist * _SIN(Angle);
 		SET_PIXELII(Xx, Yy, RGB(255, 255, 255));
 	}
-	//  }
 }
+
 
 //=============================================================================================================================================================
 //                                                         ORGANISM CLASS                                                                              
 //=============================================================================================================================================================
 
 
-
-
-Organism::~Organism()
-{ }
-
-Organism::Organism()
-{ }
 Organism::Organism(unsigned char numcells, int x, int y)
 	:Number_of_Cells(0), Distance_moved(0.0)
 {
@@ -103,23 +93,19 @@ Organism::Organism(unsigned char numcells, int x, int y)
 		cells.emplace_back(this);
 	}
 
-	float X = Position.X,
-		Y = Position.Y,
-
-		Xx = 0, Yy = 0,
-
-		angle = 0, Theta = 360 / Number_of_Cells,
+	float Xx = X,
+		Yy = Y,
+		angle = 0,
+		Theta = 360.f / Number_of_Cells,
 		dist = 15;
-
-	Xx = X;
-	Yy = Y;
 
 	for (Cell &c : cells)
 	{
 		angle += Theta;
-		Xx = X + dist * cos(RADIANS(angle));
-		Yy = Y + dist * sin(RADIANS(angle));
-		c.Offset.X = Xx - Position.X;                 c.Offset.Y = Yy - Position.Y;                        // rand()%(int)dist;//   // rand()%(int)dist;//
+		Xx = Position.X + dist * cos(RADIANS(angle));
+		Yy = Position.Y + dist * sin(RADIANS(angle));
+		c.Offset.X = Xx - Position.X;
+		c.Offset.Y = Yy - Position.Y;                        // rand()%(int)dist;//   // rand()%(int)dist;//
 		c.Starting = c.Offset;
 		c.Number_of_edges = 0;
 	}
@@ -315,7 +301,6 @@ void Organism::Draw()
 	{
 		FOR_LOOP(edgecount, cells[cellcount].Number_of_edges)
 		{
-
 			int Parent = cells[cellcount].edges[edgecount].Parent_ID;
 			int Child = cells[cellcount].edges[edgecount].Child_ID;
 

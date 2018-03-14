@@ -121,8 +121,8 @@ struct Edge
 class Organism
 {
 public:
-	Organism::Organism();
-	Organism::~Organism();
+	Organism::Organism() = default;
+	Organism::~Organism() = default;
 
 	Organism(unsigned char numcells, int x, int y);
 
@@ -135,15 +135,15 @@ public:
 		Velocity,
 		Starting;
 
-	float    Distance_moved;
+	float Distance_moved;
 
 	std::vector<Cell> cells;
 
 public:
 
-	void  Update(float Time_Step);
-	void  Draw();
-	void  Set_Position(int x, int y)
+	void Update(float Time_Step);
+	void Draw();
+	void Set_Position(int x, int y)
 	{
 		Starting.X = x;
 		Starting.Y = y;
@@ -156,9 +156,6 @@ public:
 
 	Organism* Copy(Organism *Parent);
 	Organism* Mutate(Organism  Parent);
-
 };
-
-
 
 extern int Collision(Organism *parent, Organism *List []);
