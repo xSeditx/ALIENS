@@ -2,9 +2,11 @@
 
 #include<vector>
 #include<iostream>
+
 #include"window.h"
 #include"Vertex2D.h"
 #include"brain.h"
+
 
 #define MUTATION_RATE ((rand()%101)-50)
 
@@ -29,36 +31,32 @@
 #define NUMBER_OF_NEURONS  2
 #define AMOUNT_FOOD        2200
 
+
 class Organism; struct Edge; // Forward Declaration
 
 class Cell
 {
 public:
-	Cell(); ~Cell();
+	Cell();
+	~Cell();
 	Cell(Organism *Parent);
-	// Cell(const Cell &other);
-	Vector2D      Offset,
+
+
+	Vector2D Offset,
 		Starting,
-		Potential,
-		Velocity,          // Force = Mass * Acceleration
-		Acceleration,
+		Velocity,
 		Force;
 
-	int           ID;
+	std::uint16_t ID;
 	float         Friction;
 
-	float         Angle,
+	float Angle,
 		Speed,
-		Size,
 		Mass;
 
-	unsigned char Number_of_edges;
 	unsigned long Color;
 
-	bool          Raised_Up;
-
-	Organism     *Parent;
-
+	Organism *Parent;
 	std::vector<Edge> edges;
 
 	Net Brain;
@@ -75,37 +73,28 @@ public:
 	int Collision();
 };
 
-
-
-
-
-
-
 struct Edge
 {
-	Edge(); ~Edge();
-
+	Edge() = default;
+	~Edge() = default;
 	Edge(Cell *parent, Cell *other, unsigned char tension);
 
-	// Cell *second;
+
 	Cell *Parent_ptr,
 		*Child_ptr;
 
-	int   Parent_ID,
-		Child_ID;
-
+	int Child_ID;
 
 	Vector2D  Displacement,
 		RestDistance;
 
-	float         Distance,
+	float Distance,
 		Tension,
 		Angle;
 
-	float     Get_Distance(const Cell &child)
+	float Get_Distance(const Cell &child)
 	{
-		float ret = sqrt(Squared(Parent_ptr->Offset.X - child.Offset.X) + Squared(Parent_ptr->Offset.Y - child.Offset.Y));
-		//  if(ret < 0) ret = 0; // HMMMMMMM
+		float ret = sqrtf(Squared(Parent_ptr->Offset.X - child.Offset.X) + Squared(Parent_ptr->Offset.Y - child.Offset.Y));
 		return ret;
 	}
 	//    unsigned long Color;

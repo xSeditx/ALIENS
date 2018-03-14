@@ -1,15 +1,3 @@
-//                                                                                                                                                                                                                                                                                                            
-//                                                                                                                                                                                                                                                                                                            
-//        SDL FRAMEWORK FOR GRAPHICS OPERATIONS                                                                                                                                                                                                                                                                                       
-//                                                                                                                                                                                                                                                                                                       
-//                                                                                                                                                                                                                                                                                                       
-//                                                                                                                                                                                                                                                                                                       
-//                                                                                                                                                                                                                                                                                                       
-// TARGET: WINDOW *SCREEN pointer. This is where all functions read from and draw to.                                                                                                                                                                                                                                                                                                 
-//=============================================================================================================                                                                                                                                                                                                                                                                                                              
-
-double COS[360], SIN[360];
-
 #include<iostream>
 #include <string>     // std::string, std::stoi
 
@@ -19,9 +7,11 @@ double COS[360], SIN[360];
 #include "timer.h"
 
 
-constexpr int number_of_creatures = 100;
+double COS[360], SIN[360];
+constexpr int number_of_creatures = 200;
 
 World WORLD(960, 1280);
+
 
 int KEYBOARD_HANDLER(SDL_Keycode sym)
 {
@@ -33,12 +23,12 @@ void Draw_Edges(int Xx, int Yy, Cell Parent)
 {
 	for (Edge &Child : Parent.edges)
 	{
-		float
+		const float
 			X = Parent.Offset.X + Xx,
 			Y = Parent.Offset.Y + Yy;
 
 		SET_DRAW_COLOR(Parent.Color);                   // SETS DRAW COLOR TO THAT OF THE CELL
-		LINE2(X, Y, Child.Angle, Child.Distance * .5f); // DRAWS EACH EDGE
+		LINE2(X, Y, Child.Angle, Child.Distance / 2);   // DRAWS EACH EDGE
 		FILLED_CIRCLE(X, Y, 5);                         // DRAWS EACH NODE
 		WORLD.SetSpace(X, Y, Parent.Color);
 	}
@@ -56,7 +46,6 @@ void main()
 	WINDOW main(0, 0, 1280, 960, "Multicelled automatons");
 	SET_ACTIVE_WINDOW(&main);
 
-	Organism * Creature;
 	Organism * C[number_of_creatures];
 
 	FOR_LOOP(count, number_of_creatures)
@@ -75,10 +64,11 @@ void main()
 		x += xjump;
 		if (x > SCREEN_WIDTH - 100)
 		{
-			x = xjump; y += yjump;
+			x = xjump;
+			y += yjump;
 		}
-		C[count]->Set_Position(x, y);//rand()%SCREENWIDTH;
-	  //  C[count]->cells[2].Brain.Layers[0].Neurons[1].Value = .5;//RANDOM(1); // <- to Trigger Motion in Dormant cells;
+		C[count]->Set_Position(x, y);  // rand()%SCREENWIDTH;
+		// C[count]->cells[2].Brain.Layers[0].Neurons[1].Value = .5;//RANDOM(1); // <- to Trigger Motion in Dormant cells;
 	}
 
 
@@ -88,14 +78,10 @@ void main()
 	int Generation = 0;
 
 	float AverageAvg = 0;
-	Vector2D TEST;
-	int FrameSkip = 3;
+	constexpr int FrameSkip = 3;
 
 	while (LOOP_GAME())
 	{
-
-		//Epoch++;
-
 		if ((Epoch++) % 300 == 0)
 		{
 			Organism Parent;
@@ -106,8 +92,12 @@ void main()
 			FOR_LOOP(count, number_of_creatures - 1)
 			{
 				Average += C[count]->Distance_moved;
-				if (C[count]->Distance_moved < C[Worst]->Distance_moved) Worst = count;
-				if (C[count]->Distance_moved > C[Best]->Distance_moved) Best = count;
+
+				if (C[count]->Distance_moved < C[Worst]->Distance_moved)
+					Worst = count;
+
+				if (C[count]->Distance_moved > C[Best]->Distance_moved)
+					Best = count;
 			}
 
 			Average += C[number_of_creatures - 1]->Distance_moved / number_of_creatures;
@@ -147,45 +137,41 @@ void main()
 			clear_screen();
 		}
 
+		if (!SCREEN->MOUSE_BUTTON.LEFT)
+		{
+			Selected = nullptr;
+		}
+
 		FOR_LOOP(count, number_of_creatures)
 		{
-
-			Creature = C[count];
+			auto const & Creature = C[count];
 
 			if (Selected == nullptr && SCREEN->MOUSE_BUTTON.LEFT == true)
 			{
 				for (Cell &cell : Creature->cells)
 				{
-
-					if (Is_CLICK(cell.Offset.X + Creature->Potential.X, cell.Offset.Y + Creature->Potential.Y))Selected = &cell;
-
+					if (Is_CLICK(cell.Offset.X + Creature->Potential.X, cell.Offset.Y + Creature->Potential.Y))
+						Selected = &cell;
 				}
-
 			}
 
 			if (Selected != nullptr)
 			{
 
-				float MASS = 5;
+				constexpr float MASS = 5;
 
-				Selected->Force.X = (MASS * SCREEN->MOUSE_VELOCITY.x); // .03, TIME STEP? 
-				Selected->Force.Y = (MASS * SCREEN->MOUSE_VELOCITY.y); //(rand()%3-1) * 1;
+				Selected->Force.X = MASS * SCREEN->MOUSE_VELOCITY.x; // .03, TIME STEP? 
+				Selected->Force.Y = MASS * SCREEN->MOUSE_VELOCITY.y; //(rand()%3-1) * 1;
 
 				SET_DRAW_COLOR(color_from_rgb(255, 255, 255));
 				FILLED_CIRCLE(Selected->Offset.X + Selected->Parent->Potential.X,
 					Selected->Offset.Y + Selected->Parent->Potential.Y, 7);
 			}
-			if (SCREEN->MOUSE_BUTTON.LEFT == false)
-			{
-				Selected = nullptr;
-			}
-
-
 
 			Creature->Update(10);
 			Collision(Creature, &C[0]);
 
-			if (Epoch%FrameSkip == 0)
+			if (Epoch % FrameSkip == 0)
 			{
 				Creature->Draw();
 			}
@@ -197,7 +183,6 @@ void main()
 		{
 			yy += 5;
 			LINE2(5, yy, 0, C[count]->Distance_moved);
-
 		}
 
 		if (Epoch%FrameSkip == 0)

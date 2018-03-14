@@ -25,7 +25,7 @@ using namespace std;
 //                                                         CELL CLASS                                                                                
 //=============================================================================================================================================================
 
-Cell::Cell() : Number_of_edges(0), Angle(0), Speed(0)
+Cell::Cell() : Angle(0), Speed(0)
 { }
 
 Cell::~Cell()
@@ -34,8 +34,8 @@ Cell::~Cell()
 Cell::Cell(Organism *parent)
 {
 	ID = parent->cells.size();
-	Offset.X = Potential.X = RANDOM(300);
-	Offset.Y = Potential.Y = RANDOM(300);
+	Offset.X = RANDOM(300);
+	Offset.Y = RANDOM(300);
 	Starting.X = Offset.X;
 	Starting.Y = Offset.Y;
 
@@ -102,7 +102,6 @@ Organism::Organism(unsigned char numcells, int x, int y)
 		c.Offset.X = Xx - Position.X;
 		c.Offset.Y = Yy - Position.Y;                        // rand()%(int)dist;//   // rand()%(int)dist;//
 		c.Starting = c.Offset;
-		c.Number_of_edges = 0;
 	}
 
 	FOR_LOOP(cellcount, numcells)
@@ -116,8 +115,6 @@ Organism::Organism(unsigned char numcells, int x, int y)
 
 				cells[cnum].edges.push_back(Edge(&cells[cnum], &cells[cnum2], RANDOM(1)));
 				cells[cnum2].edges.push_back(Edge(&cells[cnum2], &cells[cnum], RANDOM(1)));
-				cells[cnum].Number_of_edges++;
-				cells[cnum2].Number_of_edges++;
 			}
 		}
 	}
@@ -154,10 +151,8 @@ Organism* Organism::Mutate(Organism Parent)
 		this->cells[cellcount].Speed = 0;
 		this->cells[cellcount].Force.X = 0;
 		this->cells[cellcount].Force.Y = 0;
-		this->cells[cellcount].Acceleration.X = 0;
 		this->cells[cellcount].Angle = 0;
 		this->cells[cellcount].Mass = this->cells[cellcount].Mass;
-		this->cells[cellcount].Acceleration.Y = 0;
 		this->cells[cellcount].Parent = this;
 
 		this->cells[cellcount].Brain.Layers[0] = this->cells[cellcount].Brain.Layers[0];
@@ -209,16 +204,12 @@ void Organism::Update(float Time_Step)
 
 	float Xmove = 0, Ymove = 0;
 
-	//Print(DELTA_TIME);
 	for (Cell &Parent : cells)
-	{ // Cycle Every Cell
-
-		Parent.Acceleration = ((Parent.Force) / Parent.Mass);
-		Parent.Velocity += (Parent.Acceleration); // Change in Velocity equals Acceleration    
-		Parent.Offset += Parent.Velocity;     // Change in Position over time equals Velocity   
+	{
+		Parent.Velocity += Parent.Force / Parent.Mass;  // Change in Velocity equals Acceleration    
+		Parent.Offset += Parent.Velocity;               // Change in Position over time equals Velocity   
 
 		Parent.Force.X = 0; Parent.Force.Y = 0;
-
 
 		Xmove += Parent.Offset.X;
 		Ymove += Parent.Offset.Y;
@@ -283,55 +274,41 @@ void Organism::Update(float Time_Step)
 void Organism::Draw()
 {             /// WAIT WHY IS THIS NOT BEING CALLED AT ALL... DID I SHUT IT OFF????
 
-	FOR_LOOP(cellcount, this->cells.size())
+	FOR_LOOP(cellcount, cells.size())
 	{
-		FOR_LOOP(edgecount, cells[cellcount].Number_of_edges)
+		FOR_LOOP(edgecount, cells[cellcount].edges.size())
 		{
-			int Parent = cells[cellcount].edges[edgecount].Parent_ID;
-			int Child = cells[cellcount].edges[edgecount].Child_ID;
+			auto & Child = *cells[cellcount].edges[edgecount].Child_ptr;
 
 			float x1 = cells[cellcount].Offset.X + Potential.X,
 				y1 = cells[cellcount].Offset.Y + Potential.Y,
 
-				x2 = (x1 + cells[Child].Offset.X + Potential.X) / 2,
-				y2 = (y1 + cells[Child].Offset.Y + Potential.Y) / 2;
+				x2 = (x1 + Child.Offset.X + Potential.X) / 2,
+				y2 = (y1 + Child.Offset.Y + Potential.Y) / 2;
 
 
 			SET_DRAW_COLOR(cells[cellcount].Color);
-			// CIRCLE(X, Y,20);
-			 //FILLED_CIRCLE(x1,y1,10);   
 			LINE(x1, y1, x2, y2);
-			// float angle =  GetAngle(cells[cellcount].Offset, cells[Child].Offset / 2), 
-			//       dist = cells[cellcount].edges[edgecount].Distance;
-			// LINE2(x1,y1,angle, dist  );
 		}
 	}
 }
 
-
-//void f2(const vector<int> & v)
-
 int Collision(Organism *parent, Organism *List [])
 {
-	float X = 0,
-		Y = 0;
-	X = parent->X,
-		Y = parent->Y;
 	FOR_LOOP(OrganismCount, 10)
 	{
 		if (List[OrganismCount] != parent)
 		{
-
-			// Print ("  ");
-			if (sqrt(Squared(List[OrganismCount]->Y - Y) + Squared(List[OrganismCount]->X - parent->X)) < 30)
+			if (sqrt(Squared(List[OrganismCount]->Y - parent->Y) + Squared(List[OrganismCount]->X - parent->X)) < 30)
 			{
 				//  Print("Collision"); 
 				//  Print (OrganismCount);
-
+				return 1;
 			}
 		}
 	}
-	return 1;
+
+	return 0;
 }
 
 
@@ -346,13 +323,13 @@ int Collision(Organism *parent, Organism *List [])
 
 
 Edge::Edge(Cell *parent, Cell *other, unsigned char tension)
-	: Parent_ID(parent->ID), Child_ID(other->ID), Tension(tension), Angle(0), Parent_ptr(parent), Child_ptr(other)
+	: Child_ID(other->ID)
+	, Tension(tension)
+	, Angle(0)
+	, Parent_ptr(parent)
+	, Child_ptr(other)
 {
 	RestDistance = Get_Displacement(other->Offset, parent->Offset);
 	Distance = Get_Distance(*other);
 	Displacement = 0;
 }
-Edge::~Edge()
-{ }
-Edge::Edge()
-{ }

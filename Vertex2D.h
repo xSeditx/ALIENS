@@ -67,5 +67,8 @@ public:
 
 
 extern inline double GetAngle(Vector2D A, Vector2D B);
-extern inline double Squared(double x);
+
+template <typename T>
+static inline T Squared(T x) { return x * x; }
+
 extern inline Vector2D Get_Displacement(Vector2D A, Vector2D B);

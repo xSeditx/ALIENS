@@ -189,19 +189,10 @@ double Vector2D::Cross(Vector2D A, Vector2D B)
 	return A.X*B.Y - A.Y*B.X;
 }
 
-
-
-inline double Squared(double x)
-{
-	return x * x;
-}
 inline double GetAngle(Vector2D A, Vector2D B)
 {
 	return atan2f(B.Y - A.Y, B.X - A.X) / 3.14159 * 180;
 }
-
-
-
 
 inline Vector2D Get_Displacement(Vector2D A, Vector2D B)
 {
