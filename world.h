@@ -43,7 +43,7 @@ public:
 		// Buffer[x + Size.Width * y] = value;
 	}
 
-	vector<Organism>  Creatures;
+	std::vector<Organism>  Creatures;
 
 	int *Buffer;
 };

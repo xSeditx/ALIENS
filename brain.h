@@ -3,8 +3,6 @@
 #include<iostream>
 #include<vector>
 
-using namespace std;
-
 class Neuron;
 
 class Synapse
@@ -27,7 +25,7 @@ public:
 
 	float Value;
 
-	vector<Synapse> Synapses;
+	std::vector<Synapse> Synapses;
 };
 
 class Layer
@@ -43,7 +41,7 @@ public:
 	};   LType LayerType;
 
 	int Number_of_Neurons;
-	vector<Neuron> Neurons;
+	std::vector<Neuron> Neurons;
 
 };
 
@@ -55,7 +53,7 @@ public:
 	Net(int inputs, int hidden, int outputs);
 
 	int Number_of_Layers;
-	vector<Layer> Layers;
+	std::vector<Layer> Layers;
 
 	void Think();
 	void Draw();

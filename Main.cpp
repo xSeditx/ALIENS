@@ -51,9 +51,6 @@ void Draw_Edges(int Xx, int Yy, Cell Parent)
 	}
 }
 
-
-
-
 void main()
 {
 	for (int Angle = 0; Angle < 360; Angle++)
@@ -121,10 +118,11 @@ void main()
 
 			Average += C[number_of_creatures - 1]->Distance_moved / number_of_creatures;
 			AverageAvg += Average;
-			Print("  ");
-			cout << " FPS: " << SCREEN->FPS << "  CyclesPerSecond:" << SCREEN->CyclePerSecond << " Generation:" << Generation << endl;
-			cout << " Best:" << C[Best]->Distance_moved << "  " << " Worst: " << C[Worst]->Distance_moved << endl;
-			cout << " Average:" << Average / number_of_creatures << "  Overall Avg :" << AverageAvg / Epoch << " " << endl;
+
+			std::cout << '\n';
+			std::cout << " FPS: " << SCREEN->FPS << "  CyclesPerSecond:" << SCREEN->CyclePerSecond << " Generation:" << Generation << '\n';
+			std::cout << " Best distance:" << C[Best]->Distance_moved << "   Worst distance: " << C[Worst]->Distance_moved << '\n';
+			std::cout << " Average:" << Average / number_of_creatures << "  Overall Avg :" << AverageAvg / Epoch << " " << '\n';
 
 			Generation++;
 

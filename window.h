@@ -3,7 +3,6 @@
 #define _SDL_
 #include <SDL.h>
 
-#define Print(x)                  std::cout << x << std::endl
 #define GetRandom( min, max )     ((rand() % (int)(((max) + 1) - (min))) + (min))  
 #define RANDOM(x)                 ((rand() * (1.0 / (1.0 + RAND_MAX))) * x)
 #define RANDOM_RANGE(x)           (RANDOM(x * 2) - (x))

@@ -45,6 +45,7 @@ public:
 class Timer final
 {
 public:
-	explicit Timer(std::string name_) { };
+	explicit Timer(std::string name_)
+	{ };
 };
 #endif
