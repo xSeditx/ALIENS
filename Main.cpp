@@ -8,7 +8,7 @@
 
 
 double COS[360], SIN[360];
-constexpr int number_of_creatures = 200;
+constexpr int number_of_creatures = 500;
 
 World WORLD(960, 1280);
 
@@ -46,11 +46,11 @@ void main()
     WINDOW main(0, 0, 1280, 960, "Multicelled automatons");
     SET_ACTIVE_WINDOW(&main);
 
-    Organism * C[number_of_creatures];
+    Organism * (C[number_of_creatures]);
 
     FOR_LOOP(count, number_of_creatures)
     {
-        C[count] = new Organism(10, 100 + (rand() % SCREEN_WIDTH - 100), 100 + (rand() % SCREEN_HEIGHT - 100)); //1 + rand()%90);
+        C[count] = new Organism(count, 10, 100 + (rand() % SCREEN_WIDTH - 100), 100 + (rand() % SCREEN_HEIGHT - 100)); //1 + rand()%90);
     }
 
 
@@ -122,7 +122,6 @@ void main()
                     p.Brain.Layers[0].Neurons[0].Value = .5;
                     p.Brain.Layers[0].Neurons[1].Value = .5;
                     p.Brain.Layers[0].Neurons[2].Value = .5;
-
                 }
 
                 // C[count] = Mutate(*C[number_of_creatures - 1]); //1 + rand()%90);
@@ -157,7 +156,6 @@ void main()
 
             if (Selected != nullptr)
             {
-
                 constexpr float MASS = 5;
 
                 Selected->Force.X = MASS * SCREEN->MOUSE_VELOCITY.x; // .03, TIME STEP? 
@@ -175,7 +173,6 @@ void main()
             {
                 Creature->Draw();
             }
-
         }
 
         int yy = 0;
@@ -185,12 +182,9 @@ void main()
             LINE2(5, yy, 0, C[count]->Distance_moved);
         }
 
-        if (Epoch%FrameSkip == 0)
+        if (Epoch % FrameSkip == 0)
         {
             SYNC();
         }
     }
-
-    // CLEAN UP
-    // delete *C;
 }

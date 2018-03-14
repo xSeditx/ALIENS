@@ -19,17 +19,11 @@
 #include"Vertex2D.h"
 #include"world.h"
 
-using namespace std;
+#include <cstddef>
 
 //=============================================================================================================================================================
 //                                                         CELL CLASS                                                                                
 //=============================================================================================================================================================
-
-Cell::Cell() : Angle(0), Speed(0)
-{ }
-
-Cell::~Cell()
-{ }
 
 Cell::Cell(Organism *parent)
 {
@@ -46,11 +40,13 @@ Cell::Cell(Organism *parent)
     Angle = RANDOM(0);
     Friction = RANDOM(1);
 
-    Color = color_from_rgb((55 + RANDOM(200)),
-        (55 + RANDOM(200)),
-        (55 + RANDOM(200)));
+    Color = color_from_rgb(
+        55 + RANDOM(200),
+        55 + RANDOM(200),
+        55 + RANDOM(200)
+    );
 
-    Mass = 10; // + (rand()%3);
+    Mass = 10 + (rand() % 16);
     Parent = parent;
 }
 
@@ -60,12 +56,12 @@ void Cell::See()
         X = Offset.X + Parent->Potential.X,
         Y = Offset.Y + Parent->Potential.Y;
 
-    for (float dist = 0; dist < 8; dist++)
+    for (int dist = 0; dist < 8; dist++)
     {
         SET_PIXELII(
             X + dist * _COS(Angle),
             Y + dist * _SIN(Angle),
-            color_from_rgb(255, 255, 255)
+            0xffffff
         );
     }
 }
@@ -76,8 +72,9 @@ void Cell::See()
 //=============================================================================================================================================================
 
 
-Organism::Organism(unsigned char numcells, int x, int y)
-    : Distance_moved(0.0)
+Organism::Organism(std::size_t id, unsigned char numcells, int x, int y)
+    : ID(id)
+    , Distance_moved(0.0)
 {
     Position.X = Starting.X = Potential.X = x;
     Position.Y = Starting.Y = Potential.Y = y;
@@ -88,8 +85,7 @@ Organism::Organism(unsigned char numcells, int x, int y)
         cells.emplace_back(this);
     }
 
-    float Xx = X,
-        Yy = Y,
+    float
         angle = 0,
         Theta = 360.f / this->cells.size(),
         dist = 15;
@@ -97,24 +93,25 @@ Organism::Organism(unsigned char numcells, int x, int y)
     for (Cell &c : cells)
     {
         angle += Theta;
-        Xx = Position.X + dist * cos(RADIANS(angle));
-        Yy = Position.Y + dist * sin(RADIANS(angle));
+        const auto Xx = Position.X + dist * _COS(angle);
+        const auto Yy = Position.Y + dist * _SIN(angle);
         c.Offset.X = Xx - Position.X;
         c.Offset.Y = Yy - Position.Y;                        // rand()%(int)dist;//   // rand()%(int)dist;//
         c.Starting = c.Offset;
     }
 
     FOR_LOOP(cellcount, numcells)
-    {   // FOR EACH CELL.....
+    {
         FOR_LOOP(edgecount, rand() % numcells)
-        {  // MAKE EDGES CONNECTING THE OTHER CELLS
+        {
+            // MAKE EDGES CONNECTING THE OTHER CELLS
             if (edgecount != cellcount)
             {
                 int cnum = rand() % numcells;
                 int cnum2 = rand() % numcells;
 
-                cells[cnum].edges.push_back(Edge(&cells[cnum], &cells[cnum2], RANDOM(1)));
-                cells[cnum2].edges.push_back(Edge(&cells[cnum2], &cells[cnum], RANDOM(1)));
+                cells[cnum].edges.emplace_back(&cells[cnum], &cells[cnum2], RANDOM(1));
+                cells[cnum2].edges.emplace_back(&cells[cnum2], &cells[cnum], RANDOM(1));
             }
         }
     }
@@ -170,7 +167,6 @@ Organism* Organism::Mutate(Organism Parent)
 
         FOR_LOOP(HNeuron, this->cells[cellcount].Brain.Layers[1].Neurons.size())
         {
-
             FOR_LOOP(HSynapses, this->cells[cellcount].Brain.Layers[0].Neurons.size())
             {
                 this->cells[cellcount].Brain.Layers[1].Neurons[HNeuron].Synapses[HSynapses].Weight += ((RANDOM(2) - 1) / 10);
@@ -214,8 +210,8 @@ void Organism::Update(float Time_Step)
         Ymove += Parent.Offset.Y;
     }
 
-    Xmove = Xmove / (this->cells.size());
-    Ymove = Ymove / (this->cells.size());
+    Xmove /= this->cells.size();
+    Ymove /= this->cells.size();
     X = Xmove + Potential.X;
     Y = Ymove + Potential.Y;
     // FILLED_CIRCLE( X,Y, 14);
@@ -228,7 +224,7 @@ void Organism::Update(float Time_Step)
 
     for (Cell &Parent : cells)
     { // Cycle Every Cell
-        Parent.Velocity *= .5; // APPLY A CRUDE "FRICTION" SO THAT VELOCITY IS LOST OVER TIME
+        Parent.Velocity *= .5f; // APPLY A CRUDE "FRICTION" SO THAT VELOCITY IS LOST OVER TIME
 
         Parent.See();
         Parent.Brain.Think();
@@ -265,8 +261,11 @@ void Organism::Update(float Time_Step)
     {
         C.Speed = C.Brain.Layers[2].Neurons[0].Value * 30;
         C.Angle += (C.Brain.Layers[2].Neurons[1].Value * 5); // rand()%180;//
-        C.Force.X += C.Speed * cos(RADIANS(C.Angle));
-        C.Force.Y += C.Speed * sin(RADIANS(C.Angle));
+        while (C.Angle < 0) C.Angle += 360;
+        while (C.Angle >= 360) C.Angle -= 360;
+
+        C.Force.X += C.Speed * _COS(C.Angle);
+        C.Force.Y += C.Speed * _SIN(C.Angle);
     }
 }
 

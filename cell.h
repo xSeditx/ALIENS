@@ -1,5 +1,6 @@
 #pragma once
 
+#include <cstddef>
 #include<vector>
 #include<iostream>
 
@@ -37,8 +38,8 @@ class Organism; struct Edge; // Forward Declaration
 class Cell
 {
 public:
-    Cell();
-    ~Cell();
+    Cell() = default;
+    ~Cell() = default;
     Cell(Organism *Parent);
 
 
@@ -97,12 +98,7 @@ struct Edge
         float ret = sqrtf(Squared(Parent_ptr->Offset.X - child.Offset.X) + Squared(Parent_ptr->Offset.Y - child.Offset.Y));
         return ret;
     }
-    //    unsigned long Color;
 };
-
-
-
-
 
 
 class Organism
@@ -111,9 +107,9 @@ public:
     Organism::Organism() = default;
     Organism::~Organism() = default;
 
-    Organism(unsigned char numcells, int x, int y);
+    Organism(std::size_t id, unsigned char numcells, int x, int y);
 
-    int ID;
+    std::size_t ID;
     int X, Y;
     Vector2D Position,
         Potential,

@@ -264,8 +264,8 @@ void CIRCLE(int x, int y, float radius)
     float X1 = x + .5, Y1 = +.5;
     for (float Angle = 0; Angle < 360; Angle++)
     {
-        X1 = x + radius * _COS((int) Angle);
-        Y1 = y + radius * _SIN((int) Angle);
+        X1 = x + radius * _COS(Angle);
+        Y1 = y + radius * _SIN(Angle);
         SET_PIXEL(X1, Y1, SCREEN->DRAW_COLOR);
     }
 }
@@ -273,16 +273,17 @@ void CIRCLE(int x, int y, float radius)
 void FILLED_CIRCLE(int x, int y, float radius)
 {
     float X1 = x, Y1 = y;
-    Uint32 color = SCREEN->DRAW_COLOR;
     for (float r = 0; r < radius; r++)
     {
-        float Theta = (360 / (8 * r));
-        for (float Angle = 0; Angle < 360; Angle += Theta)
-        {
-            X1 = x + r * _COS((int) (Angle));    //X1 = x + r * cos(RADIANS(Angle));
-            Y1 = y + r * _SIN((int) (Angle));    //Y1 = y + r * sin(RADIANS(Angle));
+        const float theta = (360 / (8 * r));
 
-            SET_PIXELII(X1, Y1, color);
+        for (float Angle = 0; Angle < 360; Angle += theta)
+        {
+            SET_PIXELII(
+                x + r * _COS(Angle),
+                y + r * _SIN(Angle),
+                SCREEN->DRAW_COLOR
+            );
         }
     }
 }
