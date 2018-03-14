@@ -5,7 +5,7 @@
 #include <cstddef>
 
 #define GetRandom( min, max )     ((rand() % (int)(((max) + 1) - (min))) + (min))  
-#define RANDOM(x)                 ((rand() * (1.0 / RAND_MAX)) * (x))
+#define RANDOM(x)                 ((rand() * (1.0 / (1.0 + RAND_MAX))) * (x))
 #define RANDOM_RANGE(x)           (RANDOM(x * 2) - (x))
 
 #define RADIANS(angle)            ((angle) * .0174532925199444)
