@@ -1,7 +1,9 @@
 #pragma once
 
-#include<iostream>
-#include<vector>
+#include <cstddef>
+#include <iostream>
+#include <vector>
+
 
 class Neuron;
 
@@ -21,7 +23,8 @@ extern  Synapse   MakeSynapse(float value, Neuron *parent, Neuron *other);
 class Neuron
 {
 public:
-    Neuron(); ~Neuron();
+    Neuron() = default;
+    ~Neuron() = default;
 
     float Value;
 
@@ -39,10 +42,10 @@ public:
         Input,
         Hidden,
         Output
-    };   LType LayerType;
+    };
+    LType LayerType;
 
     std::vector<Neuron> Neurons;
-
 };
 
 

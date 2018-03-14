@@ -5,7 +5,7 @@
 #include <cstddef>
 
 #define GetRandom( min, max )     ((rand() % (int)(((max) + 1) - (min))) + (min))  
-#define RANDOM(x)                 ((rand() * (1.0 / (1.0 + RAND_MAX))) * (x))
+#define RANDOM(x)                 ((rand() * (1.0 / RAND_MAX)) * (x))
 #define RANDOM_RANGE(x)           (RANDOM(x * 2) - (x))
 
 #define RADIANS(angle)            ((angle) * .0174532925199444)
@@ -26,7 +26,7 @@ extern double COS[360], SIN[360];
 template <typename T>
 static constexpr int color_from_rgb(T r, T g, T b)
 {
-    return static_cast<int>(b) + (static_cast<int>(g) << 8) + (static_cast<int>(r) << 16);
+    return static_cast<unsigned>(b) + (static_cast<unsigned>(g) << 8u) + (static_cast<unsigned>(r) << 16u);
 }
 
 
@@ -97,7 +97,7 @@ void      SET_PIXEL(int, int, Uint32);
 void      SET_PIXELII(int, int, Uint32);
 void      SET_DRAW_COLOR(unsigned long Col);
 void      LINE(int x1, int y1, int x2, int y2);
-void      LINE2(int x, int y, float Angle, int Length);
+void      LINE2(int x, int y, float Angle, std::size_t Length);
 void      CIRCLE(int x, int y, float radius);
 void      FILLED_CIRCLE(int x, int y, float radius);
 void      BOX(int X1, int Y1, int X2, int Y2);

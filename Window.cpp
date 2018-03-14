@@ -273,7 +273,7 @@ void CIRCLE(int x, int y, float radius)
 void FILLED_CIRCLE(int x, int y, float radius)
 {
     float X1 = x, Y1 = y;
-    unsigned long color = SCREEN->DRAW_COLOR;
+    Uint32 color = SCREEN->DRAW_COLOR;
     for (float r = 0; r < radius; r++)
     {
         float Theta = (360 / (8 * r));
@@ -287,14 +287,15 @@ void FILLED_CIRCLE(int x, int y, float radius)
     }
 }
 
-void LINE2(int x, int y, float Angle, int Length)
+void LINE2(int x, int y, float Angle, std::size_t Length)
 {
     float Xpos = x, Ypos = y;
-    unsigned long color = SCREEN->DRAW_COLOR;
+    const unsigned long color = SCREEN->DRAW_COLOR;
+
     LOOP(Length)
     {
-        Xpos += _COS((int) (Angle)),
-            Ypos += _SIN((int) (Angle));
+        Xpos += _COS(Angle);
+        Ypos += _SIN(Angle);
         SET_PIXELII(Xpos, Ypos, color);
     }
 }
@@ -386,7 +387,7 @@ void LINE(int x1, int y1, int x2, int y2)
 // RETURNS ANGLE IN DEGREES
 float FindAngle(SDL_Point A, SDL_Point B)
 {
-    return atan2f(B.y - A.y, B.x - A.x) / 3.14159 * 180;
+    return atan2f(B.y - A.y, B.x - A.x) / 3.14159f * 180;
 }
 
 

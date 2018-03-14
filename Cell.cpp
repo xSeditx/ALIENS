@@ -194,7 +194,6 @@ Organism* Organism::Mutate(Organism Parent)
 
 void Organism::Update(float Time_Step)
 {
-
     float
         DELTA_TIME = 0,
         DELTA_VELOCITY = 0;
